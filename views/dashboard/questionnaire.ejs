@@ -1,0 +1,119 @@
+<html lang="en" ng-app="app">
+<head>
+
+    <% include ./partials/head %>
+
+    <script src="/public/javascripts/angular-1.6.5.min.js"></script>
+    <script src="/public/javascripts/angular-dragdrop.min.js"></script>
+    <script src="/public/javascripts/angular/services/qnService.js"></script>
+    <script src="/public/javascripts/angular/controllers/questionnaireBuilderController.js"></script>
+    <script src="/public/javascripts/angular/directives/text.js"></script>
+    <script src="/public/javascripts/angular/directives/yesNo.js"></script>
+    <script src="/public/javascripts/angular/directives/singleChoice.js"></script>
+    <script src="/public/javascripts/angular/directives/multipleChoice.js"></script>
+    <script src="/public/javascripts/angular/directives/pageDivider.js"></script>
+    <script src="/public/javascripts/angular/app.js"></script>
+
+</head>
+<body ng-controller="qnBuilderCtrl">
+    <% include ./partials/header %>
+    
+    <div class="container" ng-show="!complete">
+            <% if (questionnaire) { %>
+                <input type="hidden" ng-init='initQuestionnaire(<%- JSON.stringify(questionnaire) %>); update=true' />
+            <% } %>
+        <div class="row">
+            <div class="col-md-6 col-md-offset-3 form-horizontal">
+                <div class="form-group qn-title">
+                    <div class="col-md-12">
+                        <input id="title" type="text" class="form-control" ng-class="{'invalid-input': titleMissing}" name="title" placeholder="Title" ng-model="questionnaire.title" />
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+
+            <div class="col-md-3">
+                <div class="components-area">
+                    <div class="component-wrapper drop-component" data-type="1">
+                        <span>Text</span>
+                        <img src="/public/images/textbox.png" />
+                    </div>
+                    <div class="component-wrapper drop-component" data-type="2">
+                        <span>Yes no</span>
+                        <img src="/public/images/checkbox.png" />
+                    </div>
+                    <div class="component-wrapper drop-component" data-type="3">
+                        <span>Single choice</span>
+                        <img src="/public/images/radiobutton_list.png" />
+                    </div>
+                    <div class="component-wrapper drop-component" data-type="4">
+                        <span>Multi choice</span>
+                        <img src="/public/images/checkboxes.png" />
+                    </div>
+                    <div class="component-wrapper drop-component" data-type="5">
+                        <span>Page divider</span>
+                        <img src="/public/images/textbox.png" />
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="builder-area">
+                    <form id="dropzone" class="form-horizontal" role="form">
+                        
+                    </form>
+                    <button type="button" class="btn btn-primary" ng-click="saveQuestionnaire()">Save</button>
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <div class="edit-details-area" ng-if="selectedQuestion.type">
+
+                    <div class="form-group" ng-if="selectedQuestion.type !== 5">
+                        <div class="col-md-12">
+                            <label for="questionText" class="control-label">Set question:</label>
+                        </div>
+                        <div class="col-md-12">
+                            <textarea id="questionText" rows="4" class="form-control" name="question" ng-model='selectedQuestion.text'></textarea>
+                        </div>
+                    </div>
+
+                    <div class="form-group" ng-if="selectedQuestion.type === 1">
+                        <div class="col-md-12">
+                            <label for="questionDefaultValue" class="control-label">Set default value:</label>
+                        </div>
+                        <div class="col-md-12">
+                            <textarea id="questionDefaultValue" rows="2" class="form-control" name="question" ng-model='selectedQuestion.value'></textarea>
+                        </div>
+                    </div>
+
+                    <div class="form-group" ng-if="selectedQuestion.type === 3 || selectedQuestion.type === 4">
+                        <div class="col-md-12">
+                            <label for="questionDefaultValue" class="control-label">Set options:</label>
+                        </div>
+                        <div class="col-md-12" ng-repeat="option in selectedQuestion.options track by $index">
+                            <i class="glyphicon glyphicon-remove" aria-hidden="true" data-toggle="tooltip" data-placement="right" title="Remove" ng-click="removeOption($index)"></i>
+                            <input class="form-control option-input" name="option-{{$index}}" ng-model='selectedQuestion.options[$index]' />
+                        </div>
+                        <div class="col-md-12" >
+                            <button type="button" class="btn btn-default" ng-click="addOption()">Add option</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="container" ng-show="complete">
+        <div class="row">
+            <div class="col-md-12 msg-success-wrapper">
+                <div class="alert alert-success" role="alert"> 
+                    <strong>Questionnaire {{update > 0 ? 'updated' : 'created'}}!</strong>
+                    <a href="/dashboard">Click here</a> to see all questionnaires.
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

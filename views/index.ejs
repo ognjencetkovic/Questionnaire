@@ -1,0 +1,61 @@
+<html lang="en">
+
+<head>
+    <% include ./partials/head %>
+</head>
+
+<body>
+    <% var user = user %>
+        <% include ./partials/header %>
+            <div class="container" ng-controller="qnBuilderCtrl">
+                <div class="row">
+                    <div class="col-md-12">
+                        <table class="table stripe" cellspacing="0" width="100%">
+                            <thead>
+                                <tr>
+                                    <th scope="col" style="width: 32px;">Id</th>
+                                    <th scope="col">Title</th>
+                                    <th scope="col" style="width: 32px;"></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <% questionnaires.forEach(function(questionnaire){ %>
+                                    <tr>
+                                        <th scope="row">
+                                            <%= questionnaire.id %>
+                                        </th>
+                                        <td>
+                                            <% if (questionnaire.completed) { %>
+                                                <%= questionnaire.title %>
+                                            <% } else { %>
+                                                <a href="/questionnaire/<%= questionnaire.id %>"><%= questionnaire.title %></a>
+                                            <% } %>
+                                        </td>
+                                        <td>
+                                            <% if (questionnaire.completed) { %>
+                                                <i class="glyphicon glyphicon-ok" aria-hidden="true" data-toggle="tooltip" data-placement="right" title="Completed"></i>
+                                            <% } else { %>
+                                                <a href="/questionnaire/<%= questionnaire.id %>">
+                                                    <i class="glyphicon glyphicon-pencil" aria-hidden="true" data-toggle="tooltip" data-placement="right" title="Fill"></i>
+                                                </a>
+                                            <% } %>
+                                        </td>
+                                    </tr>
+                                    <% })%>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <script>
+                $(document).ready(function () {
+                    $('.table').DataTable({
+                        "order": [[0, "asc"]]
+                    });
+                });
+            </script>
+
+</body>
+
+</html>
