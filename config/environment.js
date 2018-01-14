@@ -5,6 +5,7 @@ var session = require('express-session');
 var bodyParser = require("body-parser");
 var settings = require('./settings');
 var models   = require('../models/');
+var MySQLStore = require('express-mysql-session')(session);
 
 module.exports = function (app) {
     app.set('port', process.env.PORT || 5000);
@@ -14,6 +15,7 @@ module.exports = function (app) {
     app.use(bodyParser.json());
     app.use("/public", express.static(path.join(settings.path, 'public')));
     app.use('/favicon.ico', express.static('/public/images/favicon.ico'));
+    var sessionStore = new MySQLStore(settings.database);
     app.use(function (req, res, next) {
         models(function (err, db) {
             if (err) return next(err);
@@ -24,6 +26,7 @@ module.exports = function (app) {
     }),
     app.use(session({
         secret: 'secret',
+        store: sessionStore,
         resave: false,
         saveUninitialized: true,
         cookie: { maxAge: (30 * 86400 * 1000) }
