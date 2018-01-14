@@ -32,5 +32,5 @@ module.exports = function (app) {
         cookie: { maxAge: (30 * 86400 * 1000) }
     }));
     
-    app.listen(5000);
+    app.listen(process.env.PORT || 5000);
 };
