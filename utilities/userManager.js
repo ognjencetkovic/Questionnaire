@@ -24,7 +24,7 @@ exports.loginUser = function (email, password, session, callback) {
     models(function (err, db) {
         db.models.user.find({ email: email}, function (err, users) {
             var user = null;
-            if (users.length) {
+            if (users && users.length) {
                 user = users[0];
                 var passwordValid = passwordHash.validatePassword(password, user.salt, user.password);
                 if (passwordValid) {

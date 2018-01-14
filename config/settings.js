@@ -13,10 +13,10 @@ var settings = {
     database: {
         protocol: "mysql",
         query: { pool: true },
-        host: "localhost",
-        database: "questionnaire",
-        user: "root",
-        password: ""
+        host: "us-cdbr-iron-east-05.cleardb.net",
+        database: "heroku_22bdbbb01f96172",
+        user: "b254c546f4b6b6",
+        password: "40a316d4"
     }
 };
 
