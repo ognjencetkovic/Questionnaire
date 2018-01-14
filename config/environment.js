@@ -13,6 +13,7 @@ module.exports = function (app) {
     app.use(bodyParser.urlencoded({ extended: false }));
     app.use(bodyParser.json());
     app.use("/public", express.static(path.join(settings.path, 'public')));
+    app.use('/favicon.ico', express.static('/public/images/favicon.ico'));
     app.use(function (req, res, next) {
         models(function (err, db) {
             if (err) return next(err);
