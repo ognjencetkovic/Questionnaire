@@ -4,7 +4,7 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node app.js"
   },
   "author": {
     "name": "Ognjen Cetkovic",
@@ -24,5 +24,8 @@
     "orm": "^4.0.2",
     "parsleyjs": "^2.8.0",
     "req-flash": "0.0.3"
+  },
+  "engines": {
+    "node": "8.9.4"
   }
 }
