@@ -8,7 +8,7 @@ exports.getList = function (req, res) {
             res.render('dashboard/index.ejs', { user: user, questionnaires: questionnaires });
         });
     } else {
-        res.sendStatus(401);
+        res.redirect('/401');
     }
 };
 
@@ -25,7 +25,7 @@ exports.create = function (req, res) {
             });
         }
     } else {
-        res.sendStatus(401);
+        res.redirect('/401');
     }
 };
 
@@ -37,14 +37,14 @@ exports.get = function (req, res) {
                 if (questionnaire) {
                     res.render('dashboard/questionnaire.ejs', { user: user, questionnaire: questionnaire.serialize() });
                 } else {
-                    res.sendStatus(404);
+                    res.redirect('/404');
                 }
             });
         } else {
             res.render('dashboard/questionnaire.ejs', { user: user, questionnaire: null });
         }
     } else {
-        res.sendStatus(401);
+        res.redirect('/401');
     }
 };
 
@@ -58,6 +58,6 @@ exports.delete = function (req, res) {
             res.sendStatus(404);
         }
     } else {
-        res.send(401);
+        res.redirect('/401');
     }
 };

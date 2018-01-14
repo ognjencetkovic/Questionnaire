@@ -8,7 +8,7 @@ exports.getList = function (req, res) {
             res.render('index.ejs', { user: user, questionnaires: questionnaires });
         });
     } else {
-        res.sendStatus(401);
+        res.redirect('/401');
     }
 };
 
@@ -20,14 +20,14 @@ exports.get = function (req, res) {
                 if (questionnaire) {
                     res.render('questionnaire.ejs', { user: user, questionnaire: questionnaire.serialize(), success: false });
                 } else {
-                    res.sendStatus(404);
+                    res.redirect('/404');
                 }
             });
         } else {
-            res.sendStatus(404);
+            res.redirect('/404');
         }
     } else {
-        res.sendStatus(401);
+        res.redirect('/401');
     }
 };
 
@@ -38,6 +38,6 @@ exports.create = function (req, res) {
             res.render('questionnaire.ejs', { user: user, success: true });
         });
     } else {
-        res.sendStatus(401);
+        res.redirect('/401');
     }
 };

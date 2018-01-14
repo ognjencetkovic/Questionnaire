@@ -63,8 +63,9 @@ exports.isAdmin = function (session) {
 };
 
 exports.getLoggedInUser = function (session) {
-    var user = session.user;
-    return user;
+    if (session && session.user){
+        return session.user;
+    }
 };
 
 exports.getUsersQuestionnaires = function (userId, callback) {

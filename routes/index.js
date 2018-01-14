@@ -9,3 +9,19 @@ exports.home = function (req, res) {
         res.render('login.ejs');
     }
 };
+
+exports.show401 = function(req, res) {
+    var user = null;
+    if (userManager.isUserLoggedIn(req.session)) {
+        user = userManager.getLoggedInUser(req.session);
+    }
+    res.render('401.ejs', { user: user });
+}
+
+exports.show404 = function(req, res) {
+    var user = null;
+    if (userManager.isUserLoggedIn(req.session)) {
+        user = userManager.getLoggedInUser(req.session);
+    }
+    res.render('404.ejs', { user: user });
+}
